@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const port=3000;
 
 const app = express();
-var current_id;
+var id;
 var call=0;
 var quizScore=0;
 
@@ -44,7 +44,8 @@ app.post("/signin",(req,res)=>
                 id=req.body.email;
                 call=0;
                 quizScore=0;
-                console.log(call);
+                //console.log(call);
+                User.updateOne({ email : req.body.email }, { $set: { age: 100 } })
                 res.redirect("start");
                 console.log(user);
             }
@@ -84,15 +85,16 @@ app.get("/start",(req,res)=>
 
 app.get("/quiz", async (req, res) => {
     axios
-      .get("https://opentdb.com/api.php?amount=1&type=multiple", {
+      .get("https://the-trivia-api.com/v2/questions?tags=space&limit=1", {
         responseType: "json",
       })
       .then(function (response) {
-       // console.log(response.data);
-        const arr = response.data.results;
-          question = arr[0].question;
-          let options = arr[0].incorrect_answers;
-          options.push(arr[0].correct_answer);
+        //console.log(response.data);
+        const arr = response.data;
+          //console.log(arr);
+          question = arr[0].question.text;
+          let options = arr[0].incorrectAnswers;
+          options.push(arr[0].correctAnswer);
           options.sort();
           if(call===4)
           {
@@ -101,7 +103,7 @@ app.get("/quiz", async (req, res) => {
               option2: options[1],
               option3: options[2],
               option4: options[3],
-              correct_option: arr[0].correct_answer})
+              correct_option: arr[0].correctAnswer})
           }
           else
           {
@@ -111,35 +113,38 @@ app.get("/quiz", async (req, res) => {
               option2: options[1],
               option3: options[2],
               option4: options[3],
-              correct_option: arr[0].correct_answer
+              correct_option: arr[0].correctAnswer
             });
           }
-          console.log(call);
+          //console.log(call);
           call++;
       });
   });
   
   app.post('/sendData', (req, res) => {
     const dataFromFrontend = req.body;
-    console.log(dataFromFrontend.result);
+    //console.log(dataFromFrontend.result);
     quizScore+=dataFromFrontend.result;
-    console.log('Data received from frontend:', dataFromFrontend);
+    //console.log('Data received from frontend:', dataFromFrontend);
     res.send('Data received successfully!');
   });
 
-  app.get('/score',(req,res)=>
-  {
-      User.findOne({ email: id}).then(user => {
+  app.get('/score', async (req, res) => {
+    try {
+        let scores = [];
+        const user = await User.findOne({ email: id });
         if (user) {
-            let scores=user.score;
+            scores = user.score;
             scores.push(quizScore);
             scores.sort();
-            console.log(scores);
-            res.render("score",({current_score:quizScore, highest:scores[scores.length-1]}))
+            await User.updateOne({ _id: user._id }, { $set: { score : scores } });
+            res.render("score", { current_score: quizScore, highest: scores[scores.length - 1] });
         }
-        });
-      
-  })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 
 app.listen(port, function() {
     console.log("Server started on port 3000");
