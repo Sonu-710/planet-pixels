@@ -6,10 +6,12 @@ const bodyParser = require("body-parser");
 const mongoose=require("mongoose");
 const axios = require("axios");
 const path = require("path");
+const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
 const port=3000;
 
 const app = express();
+const saltRounds = 10; // This defines the number of salt rounds for bcrypt
 const Admins = new Set(["sonu.2022ca104@mnnit.ac.in","riya.2022ca083@mnnit.ac.in","yashashwi.2022ca113@mnnit.ac.in"]);
 var id;
 var call=0;
@@ -126,19 +128,16 @@ app.get("/signin",(req,res)=>
     res.render("sign_in");
 })
 
-app.post("/signin",(req,res)=>
-{
-        console.log(req.body);
-        console.log(req.body.email);
-        console.log(req.body.password);
-        User.findOne({ email : req.body.email}).then(user => {
-        if (user) {
 
-            if(req.body.password==user.password)
-            {
-                id=req.body.email;
-                //If its a Admin Redirect to Dashboard
-                if(Admins.has(req.body.email))
+app.post("/signin", async (req, res) => {
+  try {
+      const user = await User.findOne({ email: req.body.email });
+      if (user) {
+          const match = await bcrypt.compare(req.body.password, user.password);
+          if (match) {
+              // Passwords match, proceed with login
+              id = req.body.email;
+              if(Admins.has(req.body.email))
                 {
                     res.redirect("dashboard");
                 }
@@ -146,22 +145,22 @@ app.post("/signin",(req,res)=>
                 {
                   call=0;
                   quizScore=0;
-                  //console.log(call);
-                  User.updateOne({ email : req.body.email }, { $set: { age: 100 } })
                   res.redirect("start");
                   console.log(user);
                 }
-            }
-            else
-            {
-                res.redirect("/signin");
-            }
-        } else {
-            console.log("user does not exists");
-            res.redirect("/signup");
-        }
-        });
-})
+          } else {
+              // Passwords don't match
+              res.redirect("/signin");
+          }
+      } else {
+          // User not found
+          res.redirect("/signup");
+      }
+  } catch (error) {
+      console.error(error);
+      res.redirect("/signin");
+  }
+});
 
 app.get("/signup",(req,res)=>
 {
@@ -169,19 +168,33 @@ app.get("/signup",(req,res)=>
     res.render("sign_up");
 });
 
-app.post("/signup",(req,res)=>
-{
-        User.findOne({ email: req.body.email}).then(user => {
-        if (user) {
-            console.log("User already Exists");
-            res.redirect("/signin");
-        } else {
-        const newUser = new User({FirstName: req.body.FirstName,LastName: req.body.LastName,age: req.body.age,email: req.body.email,password: req.body.password,score: [0]})
-        newUser.save()
-        res.redirect("/signin");
-        }
-        });
-})
+app.post("/signup", async (req, res) => {
+  try {
+      const user = await User.findOne({ email: req.body.email });
+      if (user) {
+          console.log("User already exists");
+          return res.redirect("/signin");
+      }
+
+      const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+      //console.log(hashedPassword);
+      const newUser = new User({
+          FirstName: req.body.FirstName,
+          LastName: req.body.LastName,
+          age: req.body.age,
+          email: req.body.email,
+          password: hashedPassword,
+          score: [0]
+      });
+
+      await newUser.save();
+      return res.redirect("/signin");
+  } catch (error) {
+      console.error(error);
+      return res.redirect("/signup");
+  }
+});
+
 
 app.get("/start",(req,res)=>
 {
@@ -257,7 +270,7 @@ app.get("/dashboard",async(req,res)=>
 {
   const users = await User.find({});
   console.log(users.length);
-  res.send("dashboard",);
+  res.render("dashboard",({users:users,users:users,users:users,users:users,high_score:100}));
 })
 
 app.use('/path/to/your/js/files', express.static('directory_containing_js_files', {
