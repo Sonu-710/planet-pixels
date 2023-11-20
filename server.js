@@ -116,7 +116,7 @@ app.use(
       if (err) {
         console.log(err);
       } else {
-        res.redirect("/sign_in");
+        res.redirect("/signin");
       }
     });
   });
@@ -127,7 +127,11 @@ app.use(
 
 app.get("/signin",(req,res)=>
 {
-    res.render("sign_in");
+  if(id)
+  {
+    return res.redirect("/start");
+  }
+  res.render("signin");
 })
 
 
@@ -166,8 +170,8 @@ app.post("/signin", async (req, res) => {
 
 app.get("/signup",(req,res)=>
 {
-    console.log("request recieved")
-    res.render("sign_up");
+    //console.log("request recieved")
+    res.render("signup");
 });
 
 
@@ -209,10 +213,26 @@ app.post("/signup", async (req, res) => {
         return res.redirect("/signup");
     }
 });
+ 
+app.get("/",(req,res)=>
+{
+  res.render("home", {
+    user: req.user
+  });
+});
+
+app.get("/destination",(req,res)=>
+{
+  res.render("destination");
+});
 
 
 app.get("/start",(req,res)=>
 {
+    // TODO: normal authentication function needs to be implemented correctly. google auth works correctly
+    // if(req.isAuthenticated()) res.render("start");
+    // else res.redirect("/signin");
+
     res.render("start");
 })
 
@@ -255,9 +275,9 @@ app.get("/quiz", async (req, res) => {
   
   app.post('/sendData', (req, res) => {
     const dataFromFrontend = req.body;
-    //console.log(dataFromFrontend.result);
+    console.log(dataFromFrontend.result);
     quizScore+=dataFromFrontend.result;
-    //console.log('Data received from frontend:', dataFromFrontend);
+    console.log('Data received from frontend:', dataFromFrontend);
     res.send('Data received successfully!');
   });
 
