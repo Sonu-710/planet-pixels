@@ -230,9 +230,8 @@ app.get("/destination",(req,res)=>
 app.get("/start",(req,res)=>
 {
     // TODO: normal authentication function needs to be implemented correctly. google auth works correctly
-    // if(req.isAuthenticated()) res.render("start");
-    // else res.redirect("/signin");
-
+    //if(req.isAuthenticated()) res.render("start");
+    //else res.redirect("/signin");
     res.render("start");
 })
 
@@ -316,7 +315,143 @@ app.use('/path/to/your/js/files', express.static('directory_containing_js_files'
     },
 }));
 
+//Realtime updates
 
+
+app.get("/launches/upcoming", async (req, res) => {
+  axios
+    .get("https://lldev.thespacedevs.com/2.2.0/launch/upcoming/"
+    , {
+      responseType: "json",
+    })
+    .then(function (response) {  
+      const arr = response.data.results;
+      console.log(arr[0].mission.agencies[0].name);
+      res.render("upcoming",({array:arr}));
+    });
+});
+
+
+app.get("/launches/previous", async (req, res) => {
+  axios
+    .get("https://lldev.thespacedevs.com/2.2.0/launch/previous/"
+    , {
+      responseType: "json",
+    })
+    .then(function (response) {
+      const arr = response.data.results;
+      res.render("launched",({arr:arr}));
+    });
+});
+
+app.get("/astronauts/space", async (req, res) => {
+  axios
+    .get("https://ll.thespacedevs.com/2.2.0/astronaut/?date_of_death__gte=2023-01-01"
+    , {
+      responseType: "json",
+    })
+    .then(function (response) {
+
+      const arr = response.data.results;
+      res.render("active_a",({arr:arr}));
+    });
+});
+
+app.get("/astronauts/previous",(req,res)=>{
+  axios
+    .get("https://ll.thespacedevs.com/2.2.0/astronaut/?date_of_death__lt=2023-11-01"
+    , {
+      responseType: "json",
+    })
+    .then(function (response) {
+      const arr = response.data.results;
+      res.render("d_astronauts",({arr:arr}));
+    });
+  });
+
+  app.get("/astronauts/earth",(req,res)=>{
+    axios
+      .get("https://ll.thespacedevs.com/2.2.0/astronaut/?in_space=false"
+      , {
+        responseType: "json",
+      })
+      .then(function (response) {
+  
+        const arr = response.data.results;
+        
+        res.render("not_a",({array:arr}));
+      });
+  }
+  )
+
+  app.get("/events/upcoming",(req,res)=>{
+    axios
+      .get("https://lldev.thespacedevs.com/2.2.0/event/upcoming/"
+      , {
+        responseType: "json",
+      })
+      .then(function (response) {
+  
+        const arr = response.data.results;
+        res.render("e_u",({array:arr}));
+      });
+  }
+  )
+
+  app.get("/events/previous",(req,res)=>{
+    axios
+      .get("https://lldev.thespacedevs.com/2.2.0/event/previous/"
+      , {
+        responseType: "json",
+      })
+      .then(function (response) {
+  
+        const arr = response.data.results;
+        res.render("e_p",({array:arr}));
+      });
+  }
+  )
+  
+  app.get("/news",(req,res)=>{
+    axios
+      .get("https://api.spaceflightnewsapi.net/v4/articles/"
+      , {
+        responseType: "json",
+      })
+      .then(function (response) {
+  
+        const arr = response.data.results;
+        res.render("news",({array:arr}));
+      });
+  }
+  )
+
+    app.get("/search",(req,res)=>
+    {
+      res.render("search");
+    })
+    let query;
+    app.post("/search",async(req,res)=>
+    {
+        query=req.body.searchQuery;
+        console.log(req.body);
+        res.redirect("/gallery");
+    })
+
+    app.get('/gallery', async (req, res) => {
+      try {
+        const apiUrl = `https://images-api.nasa.gov/search?q=${encodeURIComponent(query)}&media_type=image`;
+    
+        const response = await axios.get(apiUrl);
+    
+        const imageData = response.data.collection.items;
+        res.render('images', { imageData }); 
+      } catch (error) {
+        console.error('Error fetching ISS images:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    });
+    
 
 app.listen(port, function() {
     console.log("Server started on port 3000");
