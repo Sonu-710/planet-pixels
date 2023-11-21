@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="css/Pixels.png">
+  <!-- Google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Bellefair&family=Barlow:wght@400;700&display=swap"
+      rel="stylesheet">
+  <!-- Our custom css  -->
+  <link rel="stylesheet" href="css/index.css">
+  <title>Planet Pixels | Space tourism website</title>
+  <script src="javascript/navigation.js" defer></script>
+  <script src="javascript/tabs.js" defer></script>
+</head>
+<body class="destination">
+  <a class="skip-to-content" href="#main">Skin to content</a>
+    
+  <header class="primary-header flex">
+    <div>
+      <img src="css/images/Pixels.png" alt="space tourism logo" class="logo">
+    </div>
+    <button class="mobile-nav-toggle" aria-controls="primary-navigation"><span class="sr-only" aria-expanded="false">Menu</span></button>
+    <nav>
+        <ul id="primary-navigation" data-visible="false" class="primary-navigation underline-indicators flex">
+            <li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="/"><span aria-hidden="true">00</span>Home</a>
+            <li class="active"><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="/destination"><span aria-hidden="true">01</span>SPACE</a>
+            <li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="crew.html"><span aria-hidden="true">02</span>INTERACTIVES</a>
+            <!-- </li><li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="crew.html"><span aria-hidden="true">02</span>Interactives</a> -->
+            </li><li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">03</span>RESOURCES</a>
+            </li><li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">04</span>Login/Signup</a>
+              <!-- <li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">03</span>Technology</a> -->
+        </ul>
+    </nav>
+  </header>
+<main id="main" class="grid-container grid-container--destination flow">
+  <h1 class="numbered-title"><span aria-hidden="true">01</span> Pick your destination</h1>
+  
+    <img id="moon-image" class="planet" src="css/images/destination/Moon.png" alt="the moon">
+
+    <img id="mars-image" class="planet" src="css/images/destination/Mars.png" alt="the mars" hidden>
+
+    <img id="sun-image" class="planet" src="css/images/destination/Sun.png" alt="the sun" hidden>
+
+    <img id="mercury-image" class="planet" src="css/images/destination/Mercury.png" alt="the mercury" hidden>
+    <img id="venus-image" class="planet" src="css/images/destination/Venus.png" alt="the titan" hidden>
+    <img id="earth-image" class="planet" src="css/images/destination/Earth.png" alt="the earth" hidden>
+    <img id="jupiter-image" class="planet" src="css/images/destination/Jupiter.png" alt="the jupiter" hidden>
+    <img id="saturn-image" class="planet" src="css/images/destination/Satrun.png" alt="the saturn" hidden>
+    <img id="uranus-image" class="planet" src="css/images/destination/Uranus.png" alt="the uranus" hidden>
+    <img id="neo-image" class="planet" src="css/images/destination/neptune.png" alt="the neo" hidden>
+    <!-- <img id="venus-image" class="planet" src="assets/destination/" alt="the titan" hidden> -->
+  
+    <div class="tab-list underline-indicators flex" role="tablist" aria-label="destination list">
+      <button aria-selected="true" role="tab" aria-controls="moon-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="0" data-image="moon-image">Moon</button>
+      <button aria-selected="false" role="tab" aria-controls="sun-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="sun-image">Sun</button>
+      <button aria-selected="false" role="tab" aria-controls="mercury-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="mercury-image">Mercury</button>
+      <button aria-selected="false" role="tab" aria-controls="venus-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="venus-image">Venus</button>
+      <button aria-selected="false" role="tab" aria-controls="earth-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="earth-image">Earth</button>
+      <button aria-selected="false" role="tab" aria-controls="mars-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="mars-image">Mars</button>
+      <button aria-selected="false" role="tab" aria-controls="jupiter-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="jupiter-image">Jupiter</button>
+      <button aria-selected="false" role="tab" aria-controls="saturn-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="saturn-image">Saturn</button>
+      <button aria-selected="false" role="tab" aria-controls="uranus-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="uranus-image">Uranus</button>
+      <button aria-selected="false" role="tab" aria-controls="neo-tab" class="uppercase ff-sans-cond text-accent letter-spacing-2" tabindex="-1" data-image="neo-image">Neptune</button>
+      
+  </div>
+
+  <!-- Moon -->
+
+  <article class="destination-info flow" id="moon-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">Moon</h2>
+
+    <p>See our planet as you’ve never seen it before. A perfect relaxing trip away to help 
+    regain perspective and come back refreshed. While you’re there, take in some history 
+    by visiting the Luna 2 and Apollo 11 landing sites.</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">384,400 km</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">3 days</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- sun -->
+  <article hidden class="destination-info flow" id="sun-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">Sun</h2>
+
+    <p>
+      "Experience the sun as you’ve never felt it before. Embark on a celestial journey, a perfect retreat to rekindle your spirit and return rejuvenated. While basking in its warmth, explore the sun's history by witnessing its majestic radiance and the timeless dance of solar flares. Marvel at the solar wonders and embrace the brilliance of our cosmic companion, the source of life's energy and inspiration."</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">150 million kilometers</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">8 minutes and 19 seconds</p>
+      </div>
+    </div>
+  </article>
+  <!-- Mars -->
+
+  <article hidden class="destination-info flow" id="mars-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">Mars</h2>
+
+    <p>Don’t forget to pack your hiking boots. You’ll need them to tackle Olympus Mons, 
+      the tallest planetary mountain in our solar system. It’s two and a half times 
+      the size of Everest!</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">225 mil. km</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">9 months</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- mercury -->
+
+  <article hidden class="destination-info flow" id="mercury-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">Mercury</h2>
+
+    <p>Discover Mercury as you’ve never experienced it before. Embark on an otherworldly journey, a tranquil escape to recalibrate your perspective and return revitalized. Amidst the cosmic serenity, delve into Mercury's history by exploring its cratered landscapes and ancient mysteries. Wander through the landscapes that have witnessed the footprints of Luna 2, Apollo 11, and Chandrayaan 3, and let the secrets of the smallest planet in our solar system unfold before you</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">628 mil. km</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">11 minutes and 41.8519 seconds</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- venus -->
+
+  <article hidden class="destination-info flow" id="venus-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">venus</h2>
+
+    <p>Immerse yourself in the allure of Venus as you’ve never beheld it before. Embark on an enchanting escape, a serene sojourn to reset your perspective and return invigorated. Amidst the celestial tranquility, uncover the history of Venus by exploring its mystic landscapes and celestial wonders</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">130.05 million km</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">4 months.</p>
+      </div>
+    </div>
+  </article>
+   
+  <!-- earth -->
+  <article hidden class="destination-info flow" id="earth-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">earth</h2>
+
+    <p>Rediscover our planet as you’ve never witnessed it before. Embark on an idyllic getaway, a rejuvenating retreat to rediscover your perspective and return revitalized. Amidst the natural splendors, delve into the rich history of Earth by exploring iconic landmarks and significant sites, such as the historic Luna 2, Apollo 11, and the future site of Chandrayaan 3 landings. Immerse yourself in the profound stories and breathtaking beauty of our home planet, allowing the wonders of Earth to captivate and renew your spirit</p>
+    <!-- <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">1.6 bil. km</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">7 years</p>
+      </div> -->
+    <!-- </div> -->
+  </article>
+
+  <!-- Jupiter -->
+  <article hidden class="destination-info flow" id="jupiter-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">Jupiter</h2>
+
+    <p>Explore Jupiter in a way you've never imagined. Embark on a cosmic retreat, a tranquil escape to reset your perspective and return rejuvenated. Amidst the majestic gas giants, immerse yourself in the awe-inspiring history of Jupiter, where the echoes of space exploration resonate</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">391 million miles</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">550-650 days</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- saturn -->
+  <article hidden class="destination-info flow" id="saturn-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">saturn</h2>
+
+    <p>Embark on an extraordinary voyage to Saturn, witnessing the ringed marvel as never before. Indulge in a serene getaway, a celestial retreat to renew your perspective and return revitalized. Amidst the cosmic splendor, delve into the rich history of Saturn, where the grandeur of its rings and enigmatic moons tell tales of our cosmic exploration. </p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">1.431 billion km</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase"></p>1.7 years 
+      </div>
+    </div>
+  </article>
+
+  <!-- Uranus -->
+  <article hidden class="destination-info flow" id="uranus-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">uranus</h2>
+
+    <p>Embark on an extraordinary odyssey to Uranus, unveiling its celestial wonders like never before. Immerse yourself in a serene sojourn, a cosmic retreat designed to rejuvenate your perspective and return with a revitalized spirit. Amidst the celestial tranquility, explore the unique history of Uranus, where the mysteries of its icy beauty and enigmatic moons beckon</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase">2.786 billion km</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">12–15 years</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- neo -->
+  <article hidden class="destination-info flow" id="neo-tab" tabindex="0" role="tabpanel">
+    <h2 class="ff-serif fs-800 uppercase">neptune</h2>
+
+    <p>Embarking on a celestial odyssey to Uranus and Neptune promises to be a captivating journey through the outer reaches of our solar system. These ice giants, often referred to as "ice giants" due to their predominantly icy compositions, present a unique and mysterious allure. Let's delve into the extraordinary aspects of Uranus and Neptune to uncover the celestial wonders that await.</p>
+    <div class="destination-meta flex">
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Avg. distance</h3>
+        <p class="ff-serif uppercase"> 2.703 billion miles</p>
+      </div>
+      <div>
+        <h3 class="text-accent fs-200 uppercase">Est. travel time</h3>
+        <p class="ff-serif uppercase">4.1 years</p>
+      </div>
+    </div>
+  </article>
+</main>
+</body>
+</html>
