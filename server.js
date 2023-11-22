@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
 const port=3000;
 const apiKey = '6fca8b1dbfd32ae4eb4f41a1610981d2f2f4977a950ce0de551d763c3f03';
-
+const API_KEY = '67DiXUuYN7cFgGKToh5e4Z4ljslckmLQEmFMZXqU';
 
 const app = express();
 const saltRounds = 10; // This defines the number of salt rounds for bcrypt
@@ -62,7 +62,15 @@ app.use(
       async (accessToken, refreshToken, profile, cb) => {
         try {
           let user = await User.findOne({ email: profile.emails[0].value });
-    
+          id=profile.emails[0].value;
+
+          //Checking for Admin
+          if(Admins.has(profile.emails[0].value))
+          {
+              res.redirect("dashboard");
+          }
+
+
           if (!user) {
             
             const firstName = profile.name.givenName;
@@ -74,12 +82,12 @@ app.use(
               LastName: lastName,
               email: profile.emails[0].value
             });
-            id= profile.emails[0].value;
+            //id= profile.emails[0].value;
     
             // Save the new user to the database
             user = await newUser.save();
+            //console.log(id);
           }
-    
           // Return the user object
           return cb(null, user);
         } catch (error) {
@@ -127,10 +135,6 @@ app.use(
 
 app.get("/signin",(req,res)=>
 {
-  if(id)
-  {
-    return res.redirect("/start");
-  }
   res.render("signin");
 })
 
@@ -149,8 +153,6 @@ app.post("/signin", async (req, res) => {
                 }
                 else
                 {
-                  call=0;
-                  quizScore=0;
                   res.redirect("start");
                   console.log(user);
                 }
@@ -232,6 +234,8 @@ app.get("/start",(req,res)=>
     // TODO: normal authentication function needs to be implemented correctly. google auth works correctly
     //if(req.isAuthenticated()) res.render("start");
     //else res.redirect("/signin");
+    call=0;
+    quizScore=0;
     res.render("start");
 })
 
@@ -455,4 +459,56 @@ app.get("/astronauts/previous",(req,res)=>{
 
 app.listen(port, function() {
     console.log("Server started on port 3000");
+});
+
+
+app.get("/chandrayan",(req,res)=>{
+  res.render("chandrayan");
+}
+)
+
+app.get("/iss",(req,res)=>
+{
+  res.render("iss");
+})
+
+app.get("/marsrover",(req,res)=>
+{
+  res.render("marsrover")
+})
+
+app.get("/iss/gallery",async(req,res)=>
+{
+  try {
+    const apiUrl = `https://images-api.nasa.gov/search?q=iss&media_type=image`;
+
+    const response = await axios.get(apiUrl);
+    const imageData = response.data.collection.items;
+    res.render('issgallery', { imageData }); // Send the image data as a JSON response
+  } catch (error) {
+    console.error('Error fetching ISS images:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
+
+app.get("/marsrover/gallery", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY`,
+      {
+        headers: {
+          "x-rapidapi-host": "famous-quotes4.p.rapidapi.com",
+          "x-rapidapi-key": API_KEY,
+        },
+        // params: {category: 'all'}
+      }
+    );
+
+    console.log(response.data.photos[0]);
+    res.render("marsrovergallery",({arr:response.data.photos}));
+  } catch (err) {
+    console.log(err);
+  }
+  //res.render("index",);
 });
