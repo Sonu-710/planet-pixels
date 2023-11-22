@@ -11,55 +11,25 @@
     <link rel="stylesheet" href="css/signin.css">
 </head>
 <body>
-
-<div class="background">
-    <div class="shape"></div>
-    <div class="shape"></div>
-</div>
-<div class="container">
-    
-    <form action="/signin" method="post">
-        <h2>Login</h2>
+    <div class="stars-animation"></div>
+    <div class="container">
+      <!-- Your login form content -->
+      <h2>Login</h2>
+      <form>
         <label for="email">Email:</label>
-        <input type="email" id="email"placeholder="Email " name="email" required>
-
+        <input type="email" id="email" placeholder="Email" name="email" required>
+  
         <label for="password">Password:</label>
-        <input type="password" id="password"  placeholder="Password" name="password" required>
-
+        <input type="password" id="password" placeholder="password" name="password" required>
+  
         <button type="submit">Login</button>
-        
         <div class="google-signin" id="googleSignIn">
-            <span><a href="/auth/google" style="text-decoration: none;"><i class="fab fa-google google-icon"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</a></span>
-        </div>
+          <span><a href="/auth/google" style="text-decoration: none;"><i class="fab fa-google google-icon"></i>&nbsp;&nbsp;&nbsp;Sign in with Google</a></span>
+      </div>
 
-       
-    </form>
-</div>
-<!-- <div class="container">
-   
-    <form action="/signin" method="post">
-        <h2>LOGIN</h2>
-        <label for="email">Email:</label>
-        <input type="email" placeholder="Email " id="email">
-        <label for="password">Password:</label>
-        <input type="password" placeholder="Password" id="password">
-        <button class="button1" type="submit">Login</button>
-        <!-- <form action="/signup" method="get">
-         <button class="button2"type="submit">Signup</button> </form> -->
-         <!-- <div class="google-signin" id="googleSignIn" >
-            <a href="#">Sign in with Google</a>
-        </div>
-         <p class="forgot-password"><a href="#">Forgot your password?</a></p>
-    </form> -->
-    
-    <!-- <form action="/signup" method="get">
-        <button type="submit">Signup</button>
-    </form> -->
-
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<!-- <script src="script.js"></script> -->
-<script src="js/sign_in.js"></script>
-</body>
+      </form>
+    </div>
+  </body>
 </html>
  
 

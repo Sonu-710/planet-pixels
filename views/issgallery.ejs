@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;family=Bellefair&amp;family=Barlow:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+    <link rel="stylesheet" href="css/resources.css">  
+</head>
+<body>
+
+    <header>
+        <h1>Image Gallery</h1>
+    </header>
+
+    <div class="gallery">
+
+        <% for (let i = 0; i < imageData.length; i++) { %>
+            <img src="<%= imageData[i].links[0].href %>" alt="NASA Image" />
+        <% } %>
+        
+    </div>
+
+</body>
+</html>

@@ -17,22 +17,29 @@
   <script src="javascript/navigation.js" defer></script>
   <script src="javascript/tabs.js" defer></script>
 </head>
-<body class="destination">
+<body class="destination" style="padding-bottom: 40px;">
   <a class="skip-to-content" href="#main">Skin to content</a>
     
   <header class="primary-header flex">
     <div>
-      <img src="css/images/Pixels.png" alt="space tourism logo" class="logo">
+      <img src="css/images/logo(1).png" alt="space tourism logo" class="logo" style="width: 70px;">
     </div>
     <button class="mobile-nav-toggle" aria-controls="primary-navigation"><span class="sr-only" aria-expanded="false">Menu</span></button>
     <nav>
         <ul id="primary-navigation" data-visible="false" class="primary-navigation underline-indicators flex">
             <li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="/"><span aria-hidden="true">00</span>Home</a>
             <li class="active"><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="/destination"><span aria-hidden="true">01</span>SPACE</a>
-            <li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="crew.html"><span aria-hidden="true">02</span>INTERACTIVES</a>
-            <!-- </li><li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="crew.html"><span aria-hidden="true">02</span>Interactives</a> -->
-            </li><li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">03</span>RESOURCES</a>
-            </li><li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">04</span>Login/Signup</a>
+              <li class="dropdown"><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="#" class="dropbtn"><span aria-hidden="true">02</span>Interactives</a><div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <!-- <a href="#">Link 3</a> -->
+              </div> </li>
+             <li class="dropdown"><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">03</span>RESOURCES</a>  <div class="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div> </li>
+            <!-- </li><li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">04</span>Login/Signup</a> -->
               <!-- <li><a class="ff-sans-cond uppercase text-white letter-spacing-2" href="technology.html"><span aria-hidden="true">03</span>Technology</a> -->
         </ul>
     </nav>

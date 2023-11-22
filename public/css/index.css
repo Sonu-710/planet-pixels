@@ -496,27 +496,25 @@ select {
 /* Page Specific Backgrounds */
 /* ------------- */
 
-body {
-  background-size: cover;
-  background-position: bottom center;
-}
 
 /* home */
 
 .home {
-  width:100vw;
-  height:100vh;
+  /* width:100vw;
+  height:100vh; */
   background-size: cover;
-  background-position: bottom center;
-  background-image: url(images/home/background-home-mobile.jpg);
+  background-position: top center;
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(images/trial.png);
+  
+  /* background-image: url(images/home/background-home-mobile.jpg); */
 }
 
-@media(min-width: 35em) {
+/* @media(min-width: 35em) {
   .home {
     background-position: center center;
     background-image: url(images/home/background-home-tablet.jpg);
   }
-}
+} */
 
 @media(min-width: 45em) {
   .destination {
@@ -753,7 +751,8 @@ margin-left: 20%;
     margin-top: 65px;
     margin-bottom: 75px;
     border-radius: 13px;
-    font-style: italic;
+    /* font-style: italic; */
+    text-transform: uppercase;
     font-weight: bold;
     font-size: 25px;
 }
@@ -788,9 +787,6 @@ margin-left: 20%;
  #second{
     height: 100vh;
     width: 100vw;
-    background-image: url(images/destination/background-destination-desktop.jpg);
-    background-position: center center;
-    background-size: cover;
  } 
 
  footer {
@@ -813,11 +809,7 @@ footer li{
     padding-left: 80px;
     padding-right: 80px;
 }
-#content{
-    background-image: url(images/destination/background-destination-desktop.jpg);
-    background-position: center center;
-    background-size: cover;
-}
+
  .updates{
     display: inline-block;
     margin-left: 5% ;
@@ -929,3 +921,52 @@ footer li{
 .column{
     flex:50%;
 }
+
+.dropbtn {
+  background-color: #064931;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(20,21,27);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  opacity: 0; /* Initial opacity for the transition effect */
+  visibility: hidden; /* Initial visibility for the transition effect */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: rgb(236, 236, 240);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #02195f;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block; 
+  opacity: 1; /* Make the dropdown visible */
+  visibility: visible; /* Make the dropdown visible */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
