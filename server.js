@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const bodyParser = require("body-parser");
 const mongoose=require("mongoose");
@@ -27,7 +28,7 @@ app.use(express.static("public"));
 
 mongoose.connect("mongodb://localhost:27017/user")
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     FirstName : String,
     LastName: String,
     age: Number,
@@ -36,8 +37,9 @@ const userSchema = new Schema({
     score:[]
 });
 
+userSchema.plugin(passportLocalMongoose, {usernameField: "email"});
+const User = new mongoose.model('User', userSchema);
 
-const User = mongoose.model('User', userSchema);
 
 //Google Authentication
 app.use(
@@ -49,9 +51,11 @@ app.use(
     })
   );
 
+
   app.use(passport.initialize());
   app.use(passport.session());
 
+  passport.use(User.createStrategy())
   passport.use(
     new GoogleStrategy(
       {
@@ -139,36 +143,42 @@ app.get("/signin",(req,res)=>
 })
 
 
-app.post("/signin", async (req, res) => {
-  try {
-      const user = await User.findOne({ email: req.body.email });
-      if (user) {
-          const match = await bcrypt.compare(req.body.password, user.password);
-          if (match) {
-              // Passwords match, proceed with login
-              id = req.body.email;
-              if(Admins.has(req.body.email))
-                {
-                    res.redirect("dashboard");
-                }
-                else
-                {
-                  res.redirect("start");
-                  console.log(user);
-                }
-          } else {
-              // Passwords don't match
-              res.redirect("/signin");
-          }
-      } else {
-          // User not found
-          res.redirect("/signup");
-      }
-  } catch (error) {
-      console.error(error);
-      res.redirect("/signin");
-  }
-});
+// app.post("/signin", async (req, res) => {
+//   try {
+//       const user = await User.findOne({ email: req.body.email });
+//       if (user) {
+//           const match = await bcrypt.compare(req.body.password, user.password);
+//           if (match) {
+//               // Passwords match, proceed with login
+//               id = req.body.email;
+//               if(Admins.has(req.body.email))
+//                 {
+//                     res.redirect("dashboard");
+//                 }
+//                 else
+//                 {
+//                   res.redirect("start");
+//                   console.log(user);
+//                 }
+//           } else {
+//               // Passwords don't match
+//               res.redirect("/signin");
+//           }
+//       } else {
+//           // User not found
+//           res.redirect("/signup");
+//       }
+//   } catch (error) {
+//       console.error(error);
+//       res.redirect("/signin");
+//   }
+// });
+
+app.post("/signin", (req, res) => {
+  passport.authenticate("local", {failureRedirect: "/signup"})(req, res, () => {
+    res.redirect("/start");
+  })
+})
 
 app.get("/signup",(req,res)=>
 {
@@ -177,44 +187,68 @@ app.get("/signup",(req,res)=>
 });
 
 
-app.post("/signup", async (req, res) => {
-    try {
-        const emailToVerify = req.body.email;
+// app.post("/signup", async (req, res) => {
+//     try {
+//         const emailToVerify = req.body.email;
 
-        // Send a GET request to the QuickEmailVerification API
-        const response = await axios.get(`https://api.quickemailverification.com/v1/verify?email=${emailToVerify}&apikey=${apiKey}`);
+//         // Send a GET request to the QuickEmailVerification API
+//         const response = await axios.get(`https://api.quickemailverification.com/v1/verify?email=${emailToVerify}&apikey=${apiKey}`);
 
-        // Check the response from the API
-        if (response.data && response.data.result === 'valid') {
-            // If the email is valid, proceed with signup
-            const user = await User.findOne({ email: req.body.email });
-            if (user) {
-                console.log("User already exists");
-                return res.redirect("/signin");
-            }
+//         // Check the response from the API
+//         if (response.data && response.data.result === 'valid') {
+//             // If the email is valid, proceed with signup
+//             const user = await User.findOne({ email: req.body.email });
+//             if (user) {
+//                 console.log("User already exists");
+//                 return res.redirect("/signin");
+//             }
 
-            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
-            const newUser = new User({
-                FirstName: req.body.FirstName,
-                LastName: req.body.LastName,
-                age: req.body.age,
-                email: req.body.email,
-                password: hashedPassword,
-                score: [0]
-            });
+//             // const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+//             const newUser = new User({
+//                 FirstName: req.body.FirstName,
+//                 LastName: req.body.LastName,
+//                 age: req.body.age,
+//                 email: req.body.email,
+//                 password: hashedPassword,
+//                 score: [0]
+//             });
 
-            await newUser.save();
-            return res.redirect("/signin");
-        } else {
-            // If the email is invalid or other status, handle accordingly
-            console.log('Invalid email');
-            return res.redirect("/signup");
-        }
-    } catch (error) {
-        console.error(error);
-        return res.redirect("/signup");
-    }
-});
+//             // =====================================================================
+
+//             User.register({username:'username', active: false}, req.body.password , function(err, user) {
+//               if (err) { res.status(402).json({error: err}) };
+            
+//               passport.authenticate("local", {failureRedirect: "/signup"}), () =>{
+//                 res.redirect("/start");
+//               }
+//             });
+
+//             // =====================================================================
+
+//             await newUser.save();
+//             return res.redirect("/signin");
+//         } else {
+//             // If the email is invalid or other status, handle accordingly
+//             console.log('Invalid email');
+//             return res.redirect("/signup");
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         return res.redirect("/signup");
+//     }
+// });
+
+app.post("/signup", (req, res) => {
+  const {FirstName, email, LastName, age, password} = req.body;
+  User.register({FirstName: FirstName, email: email, LastName: LastName, age: age}, req.body.password , function(err, user) {
+      if (err) { return res.status(402).json({error: err}) }
+      else{          
+          passport.authenticate("local", {failureRedirect: "/signup"})(req, res, () => {
+            res.redirect("/start");
+          })
+      }
+        });
+})
  
 app.get("/",(req,res)=>
 {
@@ -228,6 +262,15 @@ app.get("/destination",(req,res)=>
   res.render("destination");
 });
 
+
+app.get("/sdf", (req, res) => {
+  if(req.isAuthenticated()){
+
+  }
+  else{
+
+  }
+})
 
 app.get("/start",(req,res)=>
 {
