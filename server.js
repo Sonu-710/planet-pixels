@@ -128,7 +128,7 @@ app.use(
       if (err) {
         console.log(err);
       } else {
-        res.redirect("/signin");
+        res.redirect("/");
       }
     });
   });
@@ -263,60 +263,72 @@ app.get("/destination",(req,res)=>
 });
 
 
-app.get("/sdf", (req, res) => {
-  if(req.isAuthenticated()){
+// app.get("/sdf", (req, res) => {
+//   if(req.isAuthenticated()){
 
-  }
-  else{
+//   }
+//   else{
 
-  }
-})
+//   }
+// })
 
 app.get("/start",(req,res)=>
 {
-    // TODO: normal authentication function needs to be implemented correctly. google auth works correctly
     //if(req.isAuthenticated()) res.render("start");
     //else res.redirect("/signin");
-    call=0;
-    quizScore=0;
-    res.render("start");
+    if(req.isAuthenticated()){
+      call=0;
+      quizScore=0;
+      res.render("start");
+    }
+    else
+    {
+        res.redirect("/signin");
+    }
+    
 })
 
 app.get("/quiz", async (req, res) => {
+  if(req.isAuthenticated()){
     axios
-      .get("https://the-trivia-api.com/v2/questions?tags=space&limit=1", {
-        responseType: "json",
-      })
-      .then(function (response) {
-        //console.log(response.data);
-        const arr = response.data;
-          //console.log(arr);
-          question = arr[0].question.text;
-          let options = arr[0].incorrectAnswers;
-          options.push(arr[0].correctAnswer);
-          options.sort();
-          if(call===4)
-          {
-            res.render("finish",{Question: question,
-              option1: options[0],
-              option2: options[1],
-              option3: options[2],
-              option4: options[3],
-              correct_option: arr[0].correctAnswer})
-          }
-          else
-          {
-            res.render("quiz", {
-              Question: question,
-              option1: options[0],
-              option2: options[1],
-              option3: options[2],
-              option4: options[3],
-              correct_option: arr[0].correctAnswer
-            });
-          }
-          call++;
-      });
+    .get("https://the-trivia-api.com/v2/questions?tags=space&limit=1", {
+      responseType: "json",
+    })
+    .then(function (response) {
+      //console.log(response.data);
+      const arr = response.data;
+        //console.log(arr);
+        question = arr[0].question.text;
+        let options = arr[0].incorrectAnswers;
+        options.push(arr[0].correctAnswer);
+        options.sort();
+        if(call===4)
+        {
+          res.render("finish",{Question: question,
+            option1: options[0],
+            option2: options[1],
+            option3: options[2],
+            option4: options[3],
+            correct_option: arr[0].correctAnswer})
+        }
+        else
+        {
+          res.render("quiz", {
+            Question: question,
+            option1: options[0],
+            option2: options[1],
+            option3: options[2],
+            option4: options[3],
+            correct_option: arr[0].correctAnswer
+          });
+        }
+        call++;
+    });
+  }
+  else{
+    res.redirect("/signin");
+  }
+    
   });
   
   app.post('/sendData', (req, res) => {
@@ -328,9 +340,9 @@ app.get("/quiz", async (req, res) => {
   });
 
   app.get('/score', async (req, res) => {
-    console.log("Score"+" "+id)
-    
-    try {
+    //console.log("Score"+" "+id)
+    if(req.isAuthenticated()){
+      try {
         let scores = [];
         const user = await User.findOne({ email: id });
         if (user) {
@@ -341,17 +353,33 @@ app.get("/quiz", async (req, res) => {
             await User.updateOne({ _id: user._id }, { $set: { score : scores } });
             res.render("score", { current_score: quizScore, highest: scores[scores.length - 1] });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Internal Server Error");
+      } catch (error) {
+          console.error(error);
+          res.status(500).send("Internal Server Error");
+    }
+    }
+    else{
+        res.redirect("/signin");
     }
 });
 
 app.get("/dashboard",async(req,res)=>
 {
-  const users = await User.find({});
-  console.log(users.length);
-  res.render("dashboard",({users:users,users:users,users:users,users:users,high_score:100}));
+  if(req.isAuthenticated()){
+    if(Admins.has(id))
+    {
+      const users = await User.find({});
+      console.log(users.length);
+      res.render("dashboard",({users:users,high_score:100}));
+    }
+    else
+    {
+      res.redirect("/signin")
+    }
+  }
+  else{
+    res.redirect("/signin");
+  }
 })
 
 app.use('/path/to/your/js/files', express.static('directory_containing_js_files', {
@@ -373,8 +401,7 @@ app.get("/launches/upcoming", async (req, res) => {
     })
     .then(function (response) {  
       const arr = response.data.results;
-      console.log(arr[0].mission.agencies[0].name);
-      res.render("upcoming",({array:arr}));
+      res.render("rockets_upcoming",({array:arr}));
     });
 });
 
@@ -387,20 +414,19 @@ app.get("/launches/previous", async (req, res) => {
     })
     .then(function (response) {
       const arr = response.data.results;
-      res.render("launched",({arr:arr}));
+      res.render("rockets_launched",({arr:arr}));
     });
 });
 
-app.get("/astronauts/space", async (req, res) => {
+app.get("/astronauts/inspace", async (req, res) => {
   axios
-    .get("https://ll.thespacedevs.com/2.2.0/astronaut/?date_of_death__gte=2023-01-01"
+    .get("https://lldev.thespacedevs.com/2.2.0/astronaut/?in_space=true"
     , {
       responseType: "json",
     })
     .then(function (response) {
-
       const arr = response.data.results;
-      res.render("active_a",({arr:arr}));
+      res.render("astronauts_in_space",({arr:arr}));
     });
 });
 
@@ -412,7 +438,8 @@ app.get("/astronauts/previous",(req,res)=>{
     })
     .then(function (response) {
       const arr = response.data.results;
-      res.render("d_astronauts",({arr:arr}));
+      console.log(arr.length);
+      res.render("astronauts_previous",({arr:arr}));
     });
   });
 
@@ -426,7 +453,7 @@ app.get("/astronauts/previous",(req,res)=>{
   
         const arr = response.data.results;
         
-        res.render("not_a",({array:arr}));
+        res.render("astronauts_on_earth",({array:arr}));
       });
   }
   )
@@ -440,7 +467,7 @@ app.get("/astronauts/previous",(req,res)=>{
       .then(function (response) {
   
         const arr = response.data.results;
-        res.render("e_u",({array:arr}));
+        res.render("events_upcoming",({array:arr}));
       });
   }
   )
@@ -454,7 +481,7 @@ app.get("/astronauts/previous",(req,res)=>{
       .then(function (response) {
   
         const arr = response.data.results;
-        res.render("e_p",({array:arr}));
+        res.render("events_previous",({array:arr}));
       });
   }
   )
@@ -499,11 +526,6 @@ app.get("/astronauts/previous",(req,res)=>{
       }
     });
     
-
-app.listen(port, function() {
-    console.log("Server started on port 3000");
-});
-
 
 app.get("/chandrayan",(req,res)=>{
   res.render("chandrayan");
@@ -554,4 +576,10 @@ app.get("/marsrover/gallery", async (req, res) => {
     console.log(err);
   }
   //res.render("index",);
+});
+
+
+
+app.listen(port, function() {
+  console.log("Server started on port 3000");
 });
