@@ -1,0 +1,143 @@
+<!-- dashboard.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+    .background {
+       width: 100%;
+       height: 100vh;
+       position: absolute;
+       top: 0;
+       left: 0;
+       background-image: url('css/images/login_bg.jpg'); /* Path to your image */
+       background-size: cover;
+       filter: brightness(50%) blur(2px); /* Adjust opacity and blur */
+       z-index: -1; /* Behind other elements */
+  }
+
+
+        .dashboard {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .container {
+    background-color: rgba(255, 255, 255, 0.13);
+    /* transform: translate(-50%, -50%); */
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    /* box-shadow: 0 0 40px rgba(8, 7, 16, 0.6); */
+    font-family: 'Space Mono', monospace;
+    /* max-width: 600px; */
+    height: 60vh;
+    width: 60vw;
+    padding: 20px;
+    /* border: 1px solid #ccc; */
+    /* border-radius: 8px; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: white;
+        }
+
+        th {
+            background-color: #281472;
+            color: white;
+        }
+
+        /* tr:hover {
+            background-color: #f5f5f5;
+        } */
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .action-buttons button {
+            background-color: #4285f4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        
+
+        .action-buttons button:active {
+            background-color: #22d828;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+<div class="dashboard container">
+    <h2 style="color: #fff;">Credentials of our Registered users</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>High Score</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < 1; i++) { %>
+                <tr>
+                    <td><%= i + 1 %></td>
+                    <td><%= name %></td>
+                    <td><%= email %></td>
+                    <td><%= age %></td>
+                    <td><%= high_score %></td>
+                    <td>
+                        <!-- <button>Edit</button> -->
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -13,11 +13,14 @@
 <body>
   <div class="container">
     <% for (let i = 0; i < 10; i++) { %>
-      <div class="black-block">    
-        <div class="text-content">
-          <p class="name"><%= arr[i].name %></p>
-          
-          <% 
+      <div class="black-block"> 
+        <div class="left-content">
+          <img src="<%= arr[i].image %>">
+        </div>   
+        <div class="right-content">
+         <div class="text-content">
+           <p class="name"><%= arr[i].name %></p>
+           <% 
             const apiDate = new Date(arr[i].net);
             const year = apiDate.getFullYear();
             const month = apiDate.getMonth() + 1;
@@ -26,11 +29,11 @@
             const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
             %>
 
-          <p class="formatted-date"><strong>Launched Date : </strong><%= formattedDate %></p>
-          <p class="provider">Launched By : <%= arr[i].launch_service_provider.name %></p>         
-          <p class="description"><%= arr[i].mission.description %></p>
-          
-        </div>    
+           <p class="formatted-date"><strong>Launched Date : </strong><%= formattedDate %></p>
+           <p class="provider">Launched By : <%= arr[i].launch_service_provider.name %></p>         
+           <p class="description"><%= arr[i].mission.description %></p>
+         </div>  
+        </div>  
       </div>
     <% } %>
   </div>

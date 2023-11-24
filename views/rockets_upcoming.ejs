@@ -14,7 +14,12 @@
   <div class="container">
     <% for (let i = 0; i < 10; i++) { %>
       <div class="black-block">
-        <div class="text-content">
+
+        <div class="left-content">
+          <img src="<%= array[i].image %>">
+        </div>  
+        <div class="right-content">
+         <div class="text-content">
           <p class="name"><%= array[i].name %></p>
           <div id="countdown_<%= i %>">
             Countdown : <br>
@@ -26,8 +31,7 @@
 
           <p class="provider">Launched By : <%= array[i].launch_service_provider.name %></p>
           <p class="description"><%= array[i].mission.description %></p>
-          
-          
+         </div>
         </div>
         <script>
           const targetDate_<%= i %> = '<%= array[i].net %>'; // Assuming targetDate is passed from the backend

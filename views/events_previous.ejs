@@ -14,7 +14,11 @@
   <div class="container">
     <% for (let i = 0; i < 10; i++) { %>
       <div class="black-block">    
-        <div class="text-content">
+        <div class="left-content">
+          <img src="<%= array[i].feature_image %>">
+        </div>
+        <div class="right-content">
+         <div class="text-content">
           <p class="name"><%= array[i].name %></p>
           <p class="location">Location : <%= array[i].location %></p>
           <p class="description"><%= array[i].description %></p>
@@ -28,7 +32,8 @@
             %>
           <p class="date"> <%= formattedDate %></p>       
           <p class="link"><a href='<%= array[i].video_url %>'>Click to see it live!</a> </p>
-        </div>    
+         </div>  
+        </div>
       </div>
     <% } %>
   </div>
