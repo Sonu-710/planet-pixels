@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    background-size: cover;
+/* background-position: bottom center; */
+background-image: url('images/destination/background-destination-desktop.jpg');
+}
+header {
+color: #fbf6f6;
+text-align: center;
+/* padding: 10px; */
+top:0%;
+text-decoration: underline;
+font-size: 27px;
+font-family: 'Pacifico', cursive;
+position: relative;
+animation: fadeInUp 1s ease-in-out;
+}
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+/* header {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+} */
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+.gallery img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    /* box-shadow: 0 4px 8px rgba(240, 3, 3, 0.1); */
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}

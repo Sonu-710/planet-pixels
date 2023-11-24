@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ten Divs</title>
+  <link rel="stylesheet" href="/css/rockets_launched.css">
+  <style>
+    /* Add any additional CSS styles here */
+    /* Ensure proper styling for .container, .black-block, .data, etc. */
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <% for (let i = 0; i < 10; i++) { %>
+      <div class="black-block">    
+        <div class="text-content">
+          <p class="name"><%= arr[i].name %></p>
+          
+          <% 
+            const apiDate = new Date(arr[i].net);
+            const year = apiDate.getFullYear();
+            const month = apiDate.getMonth() + 1;
+            const day = apiDate.getDate();
+
+            const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+            %>
+
+          <p class="formatted-date"><strong>Launched Date : </strong><%= formattedDate %></p>
+          <p class="provider">Launched By : <%= arr[i].launch_service_provider.name %></p>         
+          <p class="description"><%= arr[i].mission.description %></p>
+          
+        </div>    
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

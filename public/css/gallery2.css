@@ -1,0 +1,76 @@
+/* General styles for the search container */
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  width: 30%; /* Adjusted width */
+}
+
+input[type="text"] {
+  flex: 1; /* Fill remaining space */
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  background-color:black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button img {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Styles for the images extracted from APIs */
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .api-image {
+    width: 200px; /* Adjusted width */
+    height: 200px; /* Adjusted height */
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow */
+    transition: transform 0.3s ease; /* Add transition for smooth effect */
+  
+    /* Additional styling for hover */
+  }
+  .search-icon {
+    color: white; /* Change the color to white */
+  }
+  
+  .api-image:hover {
+    transform: translateY(-5px); /* Move image up on hover */
+  }
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .search-form {
+    width: 90%;
+  }
+
+  .api-image {
+    width: 200px; /* Adjusted width */
+  }
+}

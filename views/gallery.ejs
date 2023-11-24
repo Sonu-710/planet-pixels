@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ten Divs</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- Font Awesome link -->
+  <link rel="stylesheet" href="/css/gallery2.css"> <!-- Link to your CSS file -->
+</head>
+
+<body>
+  <div class="search-container">
+    <form action="/search" method="post" class="search-form">
+      <input type="text" id="searchQuery" name="searchQuery" required placeholder="Search...">
+      <button type="submit"><i class="fas fa-search search-icon"></i></button>
+    </form>
+  </div>
+  
+  <div class="image-container">
+    <% for (let i = 0; i < imageData.length; i++) { %>
+      <img src="<%= imageData[i].links[0].href %>" alt="NASA Image" class="api-image" />
+    <% } %>
+  </div>
+
+  <script>
+    function loadImages() {
+      // You'll need to fetch and load the images dynamically here based on the search query.
+      // For demonstration, let's assume imageData is loaded from somewhere.
+
+      const imageData = [
+        { links: [{ href: 'image1.jpg' }] },
+        { links: [{ href: 'image2.jpg' }] },
+        // Add more image data here as needed
+      ];
+
+      const imageContainer = document.getElementById('imageContainer');
+      imageContainer.innerHTML = '';
+
+      for (let i = 0; i < imageData.length; i++) {
+        const img = document.createElement('img');
+        img.src = imageData[i].links[0].href;
+        img.alt = 'NASA Image';
+        img.classList.add('api-image');
+        imageContainer.appendChild(img);
+      }
+
+      return false; // Prevent form submission
+    }
+  </script>
+</body>
+</html>

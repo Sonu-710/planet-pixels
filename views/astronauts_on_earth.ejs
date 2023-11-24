@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ten Divs</title>
+  <link rel="stylesheet" href="/css/astronauts_on_earth.css">
+  <style>
+    /* Add any additional CSS styles here */
+    /* Ensure proper styling for .container, .black-block, .data, etc. */
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <% for (let i = 0; i < 10; i++) { %>
+      <div class="black-block">  
+        <div class="left-content">
+          <img src="<%= array[i].profile_image %>">
+        </div> 
+        <div class="right-content"> 
+        <div class="text-content">
+          <p class="name"><%= array[i].name %></p>
+          <p class="dob"><%= array[i].date_of_birth %></p>
+          <p class="nationality"><%= array[i].nationality %></p>
+          <% 
+            const timeInSpace = array[i].time_in_space;
+            let days = 0,
+                hours = 0,
+                minutes = 0,
+                seconds = 0;
+
+            if (timeInSpace) {
+              const regex = /P(\d+)DT(\d+)H(\d+)M(\d+)S/;
+              const match = regex.exec(timeInSpace);
+              if (match) {
+                days = match[1] || 0;
+                hours = match[2] || 0;
+                minutes = match[3] || 0;
+                seconds = match[4] || 0;
+              }
+            }
+          %>
+
+          TIME IN SPACE : 
+          <p class="time_in_space">
+          <span class="time-block"><%= days %></span> DAYS<br>
+          <span class="time-block"><%= hours %></span> HOURS<br>
+          <span class="time-block"><%= minutes %></span> MINUTES<br>
+          <span class="time-block"><%= seconds %></span> SECONDS
+        </p>  
+          <p class="bio"><%= array[i].bio %></p>          
+          <p class="flight_count">Flight Counts : <%= array[i].flights_count %></p>
+          <p class="landing_count">Landing Counts : <%= array[i].landings_count %></p>
+          <p class="spacewalk_count">Spacewalks Count : <%= array[i].spacewalks_count %></p>
+          <p class="wiki"><a href='<%= array[i].wiki%>'>MORE INFO</a></p>       
+        </div>    
+       </div>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

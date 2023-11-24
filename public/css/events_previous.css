@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Minimum height of the body */
+    overflow: auto; /* Allow body to be scrollable */
+    background-color: black;
+
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.black-block {
+    width: 80%; /* Adjust width as needed */
+    max-width: 900px; /* Limit the maximum width */
+    height: 300px;
+    background-image: url('images/abstract2.jpg');
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(241, 239, 239, 0.5);
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.text-content {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    white-space: pre-wrap; /* Allows text to wrap */
+    max-width: 100%; /* Limit text width */
+    flex: 3; /* Take remaining space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden;
+}
+
+.text-content::-webkit-scrollbar {
+    width: 0.2em;
+  }
+   
+.text-content::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+.text-content::-webkit-scrollbar-thumb {
+    background-color: rgb(214, 204, 204);
+    outline: 1px solid rgb(204, 211, 218);
+  }
+
+  
+  .name {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5em; /* Larger font size */
+    margin-top: 0;
+    padding: 5px;
+    color: white;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Shadow effect */
+    margin-bottom: 5px; /* Adjusted margin bottom */
+}
+
+.date {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.2em; /* Larger font size */
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 0%;
+}
+
+.description {
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1em; /* Larger font size */
+    padding: 5px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 0.5%;
+}
+
+.location {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1em; /* Larger font size */
+    padding: 5px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 0.5%;
+}
+.link {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.3em; /* Larger font size */
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 0%;
+}
+.link a {
+    color: white; /* Set default text color */
+    text-decoration: none; /* Remove underline by default */
+    transition: color 0.3s, text-shadow 0.3s; /* Add transition for smooth effect */
+}
+
+.link a:hover {
+    color: white; /* Change text color on hover */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8); /* Add text shadow on hover */
+}
+

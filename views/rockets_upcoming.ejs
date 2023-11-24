@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ten Divs</title>
+  <link rel="stylesheet" href="/css/rockets_upcoming.css">
+  <style>
+    /* Add any additional CSS styles here */
+    /* Ensure proper styling for .container, .black-block, .data, etc. */
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <% for (let i = 0; i < 10; i++) { %>
+      <div class="black-block">
+        <div class="text-content">
+          <p class="name"><%= array[i].name %></p>
+          <div id="countdown_<%= i %>">
+            Countdown : <br>
+            <p class ="time-block" id="days_<%= i %>">Days: </p>
+            <p class ="time-block" id="hours_<%= i %>">Hours: </p>
+            <p class ="time-block" id="minutes_<%= i %>">Minutes: </p>
+            <p class ="time-block" id="seconds_<%= i %>">Seconds: </p>
+          </div>
+
+          <p class="provider">Launched By : <%= array[i].launch_service_provider.name %></p>
+          <p class="description"><%= array[i].mission.description %></p>
+          
+          
+        </div>
+        <script>
+          const targetDate_<%= i %> = '<%= array[i].net %>'; // Assuming targetDate is passed from the backend
+          const targetDateTime_<%= i %> = new Date(targetDate_<%= i %>).getTime();
+        
+          function updateCountdown_<%= i %>() {
+            const now = new Date().getTime();
+            const timeDifference = targetDateTime_<%= i %> - now;
+        
+            if (timeDifference <= 0) {
+              document.getElementById('days_<%= i %>').innerText = 'Launched';
+              document.getElementById('hours_<%= i %>').style.display = 'none';
+              document.getElementById('minutes_<%= i %>').style.display = 'none';
+              document.getElementById('seconds_<%= i %>').style.display = 'none';
+              clearInterval(interval_<%= i %>);
+            } else {
+              const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+              const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+              const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+        
+              document.getElementById('days_<%= i %>').innerText = `Days: ${days}`;
+              document.getElementById('hours_<%= i %>').innerText = `Hours: ${hours}`;
+              document.getElementById('minutes_<%= i %>').innerText = `Minutes: ${minutes}`;
+              document.getElementById('seconds_<%= i %>').innerText = `Seconds: ${seconds}`;
+            }
+          }
+        
+          const interval_<%= i %> = setInterval(updateCountdown_<%= i %>, 1000);
+          updateCountdown_<%= i %>();
+        </script>
+        
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

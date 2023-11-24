@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ten Divs</title>
+  <link rel="stylesheet" href="/css/news.css">
+  <style>
+    /* Add any additional CSS styles here */
+    /* Ensure proper styling for .container, .black-block, .data, etc. */
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <% for (let i = 0; i < 10; i++) { %>
+      <div class="black-block">    
+        <div class="left-content">
+          <img src='<%= array[i].image_url %>'>
+        </div>
+        <div class="right-content">
+          <div class="text-content">
+            <p class="name"><%= array[i].title %></p>
+            <p class="summary"><%= array[i].summary %></p>              
+          <% 
+            // Extract date and time from the API response
+            const apiDate = new Date(array[i].published_at);
+            const formattedDate = apiDate.toLocaleDateString();
+            const formattedTime = apiDate.toLocaleTimeString();
+          %>
+          <p class="date"> Date : <%= formattedDate %></p>
+          <p class="time"> Time : <%= formattedTime %></p>
+          <p class="link"><a href='<%= array[i].video_url %>'>MORE INFO</a> </p> 
+        </div>    
+        </div>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

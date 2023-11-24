@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <title>Ten Divs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&amp;family=Bellefair&amp;family=Barlow:wght@400;700&amp;display=swap" rel="stylesheet">
+    <!-- Our custom css  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/astronauts_in_space.css">
+  <style>
+    /* Add any additional CSS styles here */
+    /* Ensure proper styling for .container, .black-block, .data, etc. */
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <% for (let i = 0; i < arr.length; i++) { %>
+      <div class="black-block">
+        <div class="left-content">
+          <img src="<%= arr[i].profile_image %>">
+        </div>
+        <div class="right-content">
+          <div class="text-content">
+            <p class="name"><%= arr[i].name %></p>
+            <p class="dob"><%= arr[i].date_of_birth %></p>
+            <p class="nationality"><%= arr[i].nationality %></p>
+            <p class="bio"><%= arr[i].bio %></p>
+            <% 
+            const apiDate = new Date(arr[i].last_flight);
+            const year = apiDate.getFullYear();
+            const month = apiDate.getMonth() + 1;
+            const day = apiDate.getDate();
+        
+            const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+            %>
+            <p class="last-flight"><strong>Last Flight : </strong><%= formattedDate %></p>
+            <p class="wiki"><a href='<%= arr[i].wiki%>'>MORE INFO</a></p>
+            
+        </div>
+        
+        </div>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

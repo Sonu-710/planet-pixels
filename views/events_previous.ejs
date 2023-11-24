@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ten Divs</title>
+  <link rel="stylesheet" href="/css/events_previous.css">
+  <style>
+    /* Add any additional CSS styles here */
+    /* Ensure proper styling for .container, .black-block, .data, etc. */
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <% for (let i = 0; i < 10; i++) { %>
+      <div class="black-block">    
+        <div class="text-content">
+          <p class="name"><%= array[i].name %></p>
+          <p class="location">Location : <%= array[i].location %></p>
+          <p class="description"><%= array[i].description %></p>
+          <% 
+            const apiDate = new Date(array[i].date);
+            const year = apiDate.getFullYear();
+            const month = apiDate.getMonth() + 1;
+            const day = apiDate.getDate();
+        
+            const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+            %>
+          <p class="date"> <%= formattedDate %></p>       
+          <p class="link"><a href='<%= array[i].video_url %>'>Click to see it live!</a> </p>
+        </div>    
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>
