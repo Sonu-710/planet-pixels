@@ -365,13 +365,13 @@ app.get("/quiz", async (req, res) => {
 
 app.get("/dashboard",async(req,res)=>
 {
-  if(req.isAuthenticated()){
-    if(Admins.has(id))
-    {
+  //if(req.isAuthenticated()){
+    //if(Admins.has(id))
+    //{
       const users = await User.find({});
       console.log(users.length);
-      res.render("dashboard",({users:users,high_score:100}));
-    }
+      res.render("dashboard",({users:users}));
+    /*}
     else
     {
       res.redirect("/signin")
@@ -379,7 +379,7 @@ app.get("/dashboard",async(req,res)=>
   }
   else{
     res.redirect("/signin");
-  }
+  }*/
 })
 
 app.use('/path/to/your/js/files', express.static('directory_containing_js_files', {
@@ -513,16 +513,24 @@ app.get("/astronauts/previous",(req,res)=>{
     })
 
     app.get('/gallery', async (req, res) => {
-      try {
-        const apiUrl = `https://images-api.nasa.gov/search?q=${encodeURIComponent(query)}&media_type=image`;
-    
-        const response = await axios.get(apiUrl);
-    
-        const imageData = response.data.collection.items;
-        res.render('images', { imageData }); 
-      } catch (error) {
-        console.error('Error fetching ISS images:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+      if(query!=null)
+      {
+        try {
+          const apiUrl = `https://images-api.nasa.gov/search?q=${encodeURIComponent(query)}&media_type=image`;
+      
+          const response = await axios.get(apiUrl);
+      
+          const imageData = response.data.collection.items;
+          res.render('gallery', { imageData }); 
+          query=null;
+        } catch (error) {
+          console.error('Error fetching ISS images:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+        }
+      }
+      else
+      {
+        res.redirect("/search");
       }
     });
     
@@ -559,25 +567,42 @@ app.get("/iss/gallery",async(req,res)=>
 
 app.get("/marsrover/gallery", async (req, res) => {
   try {
-    const response = await axios.get(
-      `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY`,
-      {
-        headers: {
-          "x-rapidapi-host": "famous-quotes4.p.rapidapi.com",
-          "x-rapidapi-key": API_KEY,
-        },
-        // params: {category: 'all'}
-      }
-    );
+    const apiUrl = `https://images-api.nasa.gov/search?q=mars rover&media_type=image`;
 
-    console.log(response.data.photos[0]);
-    res.render("marsrovergallery",({arr:response.data.photos}));
-  } catch (err) {
-    console.log(err);
+    const response = await axios.get(apiUrl);
+    const imageData = response.data.collection.items;
+    res.render('issgallery', { imageData }); // Send the image data as a JSON response
+  } catch (error) {
+    console.error('Error fetching ISS images:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-  //res.render("index",);
 });
 
+app.get("/chandrayan/gallery",(req,res)=>
+{
+   res.render("chandrayangallery");
+})
+
+app.get("/spacepedia",(req,res)=>
+{
+  res.render("spacepedia");
+})
+
+
+app.get("/astronauts",(req,res)=>
+{
+  res.render("astronauts");
+})
+
+app.get("/events",(req,res)=>
+{
+  res.render("events");
+})
+
+app.get("/rockets",(req,res)=>
+{
+  res.render("rockets");
+})
 
 
 app.listen(port, function() {
