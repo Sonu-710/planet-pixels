@@ -365,13 +365,13 @@ app.get("/quiz", async (req, res) => {
 
 app.get("/dashboard",async(req,res)=>
 {
-  //if(req.isAuthenticated()){
-    //if(Admins.has(id))
-    //{
+  if(req.isAuthenticated()){
+    if(Admins.has(id))
+    {
       const users = await User.find({});
       console.log(users.length);
       res.render("dashboard",({users:users}));
-    /*}
+    }
     else
     {
       res.redirect("/signin")
@@ -379,7 +379,7 @@ app.get("/dashboard",async(req,res)=>
   }
   else{
     res.redirect("/signin");
-  }*/
+  }
 })
 
 app.use('/path/to/your/js/files', express.static('directory_containing_js_files', {
