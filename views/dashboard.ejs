@@ -19,7 +19,7 @@
        position: absolute;
        top: 0;
        left: 0;
-       background-image: url('css/images/login_bg.jpg'); /* Path to your image */
+       background-image: url('/css/images/signin_bg.jpg'); /* Path to your image */
        background-size: cover;
        filter: brightness(50%) blur(2px); /* Adjust opacity and blur */
        z-index: -1; /* Behind other elements */
@@ -121,23 +121,26 @@
             </tr>
         </thead>
         <tbody>
-            <% for (let i = 0; i < 1; i++) { %>
-                <tr>
-                    <td><%= i + 1 %></td>
-                    <td><%= name %></td>
-                    <td><%= email %></td>
-                    <td><%= age %></td>
-                    <td><%= high_score %></td>
-                    <td>
-                        <!-- <button>Edit</button> -->
-                        <button>Delete</button>
-                    </td>
-                </tr>
+            <% for (let i = 0; i < users.length ; i++) { %>
+                <% if (users[i].Admin!=true) { %>
+                    <tr>
+                        <td><%= i+1 %></td>
+                        <td><%= users[i].FirstName + " " + users[i].LastName %></td>
+                        <td><%= users[i].email %></td>
+                        <td><%= users[i].age %></td>
+                        <td><%= users[i].score[users[i].score.length - 1] %></td>
+                        <td>
+                            <!-- <button>Edit</button> -->
+                            <button onclick="deleteUser('<%= users[i]._id %>')">Delete</button>
+
+                        </td>
+                    </tr>
+                <% } %>
             <% } %>
         </tbody>
     </table>
 
 </div>
-
+<script src="js/dashboard.js"></script>
 </body>
 </html>
