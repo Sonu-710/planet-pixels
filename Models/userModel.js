@@ -2,12 +2,15 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const catchAsync = require("./../utils/CatchAsync");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  FirstName: {
     type: String,
-    require: ["true", "Please provide a name"],
+    require: ["true", "Please provide a first name"],
+  },
+  LastName: {
+    type: String,
+    require: ["true", "Please provide a last name"],
   },
   email: {
     type: String,
@@ -27,26 +30,13 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     select: false,
   },
-  passwordConfirm: {
-    type: String,
-    required: ["true", "Please confirm your password"],
-    validate: {
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "Passwords are not the same",
-    },
+  age: {
+    type: Number,
+    required: ["true", "Age is required"],
   },
-  passwordChangedAt: {
-    type: Date,
-    select: false,
-  },
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
+  highscore: {
+    type: Number,
+    default: 0,
   },
 });
 
@@ -62,7 +52,6 @@ userSchema.pre("save", async function (next) {
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });
-
 
 userSchema.methods.correctPassword = async function (
   candidatePassword,
