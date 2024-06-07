@@ -1,4 +1,5 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -13,8 +14,10 @@ const port = 3000;
 const apiKey = "6fca8b1dbfd32ae4eb4f41a1610981d2f2f4977a950ce0de551d763c3f03";
 const API_KEY = "67DiXUuYN7cFgGKToh5e4Z4ljslckmLQEmFMZXqU";
 
+dotenv.config({ path: "./config.env" });
 const app = express();
 const saltRounds = 10; // This defines the number of salt rounds for bcrypt
+
 const Admins = new Set([
   "sonu.2022ca104@mnnit.ac.in",
   "riya.2022ca083@mnnit.ac.in",
@@ -30,7 +33,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/user");
+const DB = process.env.DATABASE.replace(
+  "<password>",
+  process.env.DATABASE_PASSWORD
+);
+
+mongoose.connect(DB, {}).then(() => {
+  console.log("DB connection successful");
+});
+
+
+
 
 const userSchema = new mongoose.Schema({
   FirstName: String,
