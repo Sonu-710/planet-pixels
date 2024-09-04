@@ -14,14 +14,14 @@ const DB = process.env.DATABASE.replace(
   "<password>",
   process.env.DATABASE_PASSWORD
 );
-mongoose.connect(DB, {}).then(() => {
+mongoose.connect(DB, {}).then(() => { 
   console.log("DB connection successful");
 });
 
-app.set("view engine", "ejs");
+app.set("view engine", "ejs"); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static("public")); 
 app.use(cookieParser());
 
 const authRouter = require("./Routes/user");

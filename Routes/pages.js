@@ -11,13 +11,14 @@ router.get("/destination", (req, res) => {
 router.get("/search", (req, res) => {
   res.render("search");
 });
-let query;
-router.post("/search", async (req, res) => {
-  query = req.body.searchQuery;
-  res.redirect("/gallery");
-});
+// let query;
+// router.post("/search", async (req, res) => {
+//   query = req.body.searchQuery;
+//   res.redirect("/gallery");
+// });
 
-router.get("/gallery", async (req, res) => {
+router.post("/gallery",  async(req, res) => {
+  const query=req.body.searchQuery;
   if (query != null) {
     try {
       const apiUrl = `https://images-api.nasa.gov/search?q=${encodeURIComponent(

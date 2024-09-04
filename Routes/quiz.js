@@ -72,6 +72,8 @@ router.post("/sendData", (req, res) => {
   console.log("Data received from frontend:", dataFromFrontend);
   res.send("Data received successfully!");
 });
+
+
 router.get("/score", authController.protect, getScore);
 router.get("/quiz", authController.protect, getQuestion);
 router.get("/start", authController.protect, renderStart);
